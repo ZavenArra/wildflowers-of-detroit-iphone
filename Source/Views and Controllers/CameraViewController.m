@@ -338,12 +338,20 @@
     UIGraphicsEndImageContext();
     NSData * mediumImageDataJpeg = UIImageJPEGRepresentation(mediumImage, .8);
 
+    NSDictionary * geometry = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @"Point", @"type",
+                               [NSArray arrayWithObjects: [NSNumber numberWithDouble: [RHLocation getLatitude]], 
+                                [NSNumber numberWithDouble:[RHLocation getLongitude]],
+                                nil],  @"coordinates",
+      nil
+        ];
     NSMutableDictionary * newDocument = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                          self.reporter.text, @"reporter",
                                          self.comment.text, @"comment",
                                          [RHLocation getLatitudeString], @"latitude", 
                                          [RHLocation getLongitudeString], @"longitude",
                                          [RESTBody JSONObjectWithDate: [NSDate date]], @"created_at",
+                                         geometry, @"geometry",
                                          //[RESTBody base64WithData: thumbImageDataJpeg ], @"thumb",
                                          //[RESTBody base64WithData: mediumImageDataJpeg ], @"medium",
                                          [RHDeviceUser uniqueIdentifier], @"deviceuser_identifier",

@@ -239,8 +239,8 @@
         
     for( RHDocument * document in documents){
         CLLocationCoordinate2D coordinate;
-        coordinate.latitude = [ (NSString*) [document objectForKey:@"latitude"] floatValue];
-        coordinate.longitude = [ (NSString*) [document objectForKey:@"longitude"] floatValue];
+        coordinate.latitude = [(NSNumber *) [[[document objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:0] doubleValue];
+        coordinate.longitude = [ (NSNumber*) [[[document objectForKey:@"geometry"] objectForKey:@"coordinates"] objectAtIndex:1] doubleValue];
         if(coordinate.latitude == 0 && coordinate.longitude==0){
             continue;
         }
