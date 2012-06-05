@@ -30,52 +30,10 @@
 
 -  (id) initWithBlock:( void ( ^ )() ) didStartBlock {
     
-    
-    
-    /*
-    NSLog(@"Creating database...");
-    CouchTouchDBServer* aserver = [CouchTouchDBServer sharedInstance];
-    NSAssert(!aserver.error, @"Error initializing TouchDB: %@", aserver.error);
-    
-    // Create the database on the first run of the app.
-    self.database = [aserver databaseNamed: @"grocery-sync"];
-    NSError* error;
-    if (![self.database ensureCreated: &error]) {
-        [self showAlert: @"Couldn't create local database." error: error fatal: YES];
-       // return YES;
-    }
-    database.tracksChanges = YES;
-    NSLog(@"...Created CouchDatabase at <%@>", self.database.URL);
-    
-    
-    return self;
-    */
-    
-    
-    
-    
     // Start the TouchDB server:
     CouchTouchDBServer* server = [CouchTouchDBServer sharedInstance];
     NSAssert(!server.error, @"Error initializing TouchDB: %@", server.error);
     
-    /*
-    if(![RHSettings useRemoteServer]){
-        server = [[CouchEmbeddedServer alloc] init];
-    } else {
-        server = [[CouchEmbeddedServer alloc] initWithURL: [NSURL URLWithString: [RHSettings couchRemoteServer]]];
-        / *
-         Set Admin Credential Somehow??
-         server.couchbase.adminCredential = [NSURLCredential credentialWithUser:@"winterroot" password:@"dieis8835nd" persistence:NSURLCredentialPersistenceForSession];
-         */
-    //}
-    
-#if INSTALL_CANNED_DATABASE
-    NSString* dbPath = [[NSBundle mainBundle] pathForResource: [RHSettings databaseName] ofType: @"couch"];
-    NSAssert(dbPath, @"Couldn't find "kDatabaseName".couch");
-    [server installDefaultDatabase: dbPath];
-#endif
-    
-  //  BOOL started = [server start: ^{  // ... this block runs later on when the server has started up:
         if (server.error) {
             [self showAlert: @"Couldn't start Couchbase." error: server.error fatal: YES];
             return nil;
