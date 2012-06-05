@@ -119,12 +119,12 @@
      
             NSDictionary * value = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [doc objectForKey: @"_id"], @"id",  
-                                    [doc objectForKey: @"thumb"], @"thumb", 
                                     [doc objectForKey: @"latitude"], @"latitude",
                                     [doc objectForKey: @"longitude"], @"longitude", 
                                     [doc objectForKey: @"reporter"], @"reporter", 
                                     [doc objectForKey: @"comment"], @"comment", 
                                     [doc objectForKey: @"created_at"],@"created_at", 
+                                    [doc objectForKey: @"geometry"], @"geometry",
                                     nil];
             emit(key, value);
         } version: @"1.0"];
@@ -144,6 +144,11 @@
         */
         
         [design defineViewNamed: @"rhusDocuments" mapBlock: ^(NSDictionary* doc, void (^emit)(id key, id value)){
+            
+            if([doc objectForKey:@"docType"] == @"zone"){
+                return;
+            }
+            
             NSArray * key = [NSArray arrayWithObjects:
                              [doc objectForKey:@"project"],
                              [doc objectForKey:@"created_at"],
@@ -151,12 +156,12 @@
             
             NSDictionary * value = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [doc objectForKey: @"_id"], @"id",
-                                    [doc objectForKey: @"thumb"], @"thumb",
                                     [doc objectForKey: @"latitude"], @"latitude",
                                     [doc objectForKey: @"longitude"], @"longitude",
                                     [doc objectForKey: @"reporter"], @"reporter",
                                     [doc objectForKey: @"comment"], @"comment",
                                     [doc objectForKey: @"created_at"], @"created_at",
+                                    [doc objectForKey: @"geometry"], @"geometry",
                                     nil];
             
             emit(key, value);
@@ -245,12 +250,7 @@
 }
 
 
-- (NSArray *) runQuery: (CouchQuery *) couchQuery {
-//   RESTOperation * op = [couchQuery start];
-//   [op wait]; //synchronous
-//   NSLog(@"op = %@", op.dump);
-
-    
+- (NSArray *) runQuery: (CouchQuery *) couchQuery {    
     CouchQueryEnumerator * enumerator = [couchQuery rows];
     
     if(!enumerator){
@@ -262,85 +262,8 @@
     NSMutableArray * data = [NSMutableArray array];
     while( (row =[enumerator nextRow]) ){
         
-        
-        //Fix Image Attachments
-        //TODO: This code can be removed once we are reasonably certain everything has been transformed
-        //BOOL docNeedsSave = false;
         CouchDocument * doc = row.document;
-      //  NSMutableDictionary * newProperties = [doc.properties mutableCopy ];
-        
-        
-        /*
-         if( ([row.value objectForKey:@"thumb"] == NULL) || ([row.value objectForKey:@"thumb"] == @"") ){
-         NSString * docId = [row.value objectForKey:@"id"];
-         NSData * imageData = [MapCouchbaseDataModel getDocumentThumbnailData:docId];
-         if(imageData != nil){
-         NSData * thumb = imageData;
-         [newProperties setValue:[RESTBody base64WithData:thumb] forKey:@"thumb"];
-         docNeedsSave = true;
-         } else if([doc.properties objectForKey:@"thumb-android0.1"]){
-         [newProperties setValue:[doc.properties objectForKey:@"thumb-android0.1"] forKey:@"thumb"];
-         }
-         }    
-         
-         
-         if([row.value objectForKey:@"medium"] == NULL || [row.value objectForKey:@"medium"] == @""){
-         NSData * imageData = [MapCouchbaseDataModel getDocumentImageData:[row.value objectForKey:@"id"]];
-         if(imageData != nil){
-         NSData * mediumImage = imageData;
-         [newProperties setValue:[RESTBody base64WithData:mediumImage] forKey:@"medium"];
-         docNeedsSave = true;
-         } else if([doc.properties objectForKey:@"medium-android0.1"]){
-         [newProperties setValue:[doc.properties objectForKey:@"medium-android0.1"] forKey:@"medium"];
-         }
-         }
-         
-         
-         if(docNeedsSave){
-         CouchRevision* latest = doc.currentRevision;
-         //  NSLog(@"%@", [newProperties debugDescription]);
-         NSLog(@"Fixing Document");
-         NSLog(@"%@", [row.value objectForKey:@"id"] );
-         RESTOperation* op = [latest putProperties:newProperties];
-         [op start];
-         [op wait]; //make it synchronous
-         }
-         */
-        
-        /*
-        NSMutableDictionary * properties = [(NSDictionary *) row.value mutableCopy];
-        //Translate the Base64 data into a UIImage
-        if([properties objectForKey:@"thumb"] != NULL && [properties objectForKey:@"thumb"] != @"" ){
-            NSString * base64 = [properties objectForKey:@"thumb"];
-            //  NSLog(@"%@", [row.value objectForKey:@"id"] );
-            NSData * thumb = [RESTBody dataWithBase64:base64];
-            if(thumb != NULL && [thumb length]){
-                [properties setObject:[UIImage imageWithData:thumb]
-                                  forKey:@"thumb"];
-            } else {
-                [properties removeObjectForKey:@"thumb"];
-            }
-        } else {
-            [properties removeObjectForKey:@"thumb"];
-        }
-        
-        
-        if([properties objectForKey:@"medium"] != NULL && [properties objectForKey:@"medium"] != @"" ){
-            NSString * base64 = [properties objectForKey:@"medium"];
-            //  NSLog(@"%@", [row.value objectForKey:@"id"] );
-            NSData * medium = [RESTBody dataWithBase64:base64];
-            if(medium != NULL && [medium length]){
-                [properties setObject:[UIImage imageWithData:medium]
-                                  forKey:@"medium"];
-            } else {
-                [properties removeObjectForKey:@"medium"];
-                
-            }
-        } else {
-            [properties removeObjectForKey:@"medium"];
-        }
-        */
-        
+             
         //give em the data
         NSDictionary * properties = doc.properties;
         [data addObject: [[RHDocument alloc] initWithDictionary: [NSDictionary dictionaryWithDictionary: properties]]];

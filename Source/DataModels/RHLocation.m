@@ -44,6 +44,15 @@
 }
 
 
+- (double) _getLatitude{
+    return currentLocation.coordinate.latitude;
+}
+
+- (double) _getLongitude {
+    return currentLocation.coordinate.longitude;
+}
+
+
 #pragma - Public Interface
 
 + (NSString *) getLatitudeString {
@@ -54,6 +63,13 @@
    return [self.instance _getLongitudeString];
 }
 
++ (double) getLatitude {
+    return [self.instance _getLatitude];
+}
+
++ (double) getLongitude {
+   return [self.instance _getLongitude];
+}
 
 #pragma mark - CLLocationManagerDelegate Methods
 
