@@ -87,7 +87,6 @@
     [swoopTabViewController.view addSubview:loadingViewController.view];
     loadingViewController.loadingImageView.image = [UIImage imageNamed:@"Loading"];
     
-    [self.window makeKeyAndVisible];
     
 
     RHDataModel * dataModel =[RHDataModel instance];
@@ -102,14 +101,22 @@
 
   //  [self performSelectorInBackground:@selector(initializeInBackground) withObject:nil];
     
-    [self initializeInBackground];
+    [[RHDataModel instance] initWithBlock:^{return;} ];
+    
+    [self.window makeKeyAndVisible];
+    [self performSelector:@selector(presentApplication) withObject:nil afterDelay:3];
+
     
 }
 
 //Start couchBase in the background.  Calls to the datamodel will be asynchronous, allowing the database to
 //start serving whenever it's ready.
-- (void) initializeInBackground{
+- (void) removeBackersView{
+    [loadingViewController.view removeFromSuperview];
+    loadingViewController = nil;
     
+		/*
+		 * Launch Tweak
   //  @autoreleasepool {
         NSLog(@"%@", @"Starting app resources in background");
         
@@ -137,6 +144,7 @@
         NSLog(@"%@", @"Done");
 
    // }
+	 // */
 
 }
 
@@ -148,7 +156,6 @@
     isDoneStartingUp = TRUE;    
     [loadingViewController.view removeFromSuperview];
     loadingViewController = nil;
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     [swoopTabViewController didTouchBottomButton:self];
     if(!swoopTabViewController.manualAppearCallbacks){
         [self performSelector:@selector(delayedViewDidAppear) withObject:nil afterDelay:0.0];
