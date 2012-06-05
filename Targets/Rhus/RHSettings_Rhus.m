@@ -3,12 +3,11 @@
 //  Wildflowers of Detroit Iphone
 //
 //  Created by Deep Winter on 3/10/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "RHSettings.h"
 
-#define kSyncDbURL @"http://winterroot:dieis8835nd@data.winterroot.net:5984/wildflowers_of_detroit"
+#define kSyncDbURL @"http://winterroot:nutsnthings2012@winterroot.iriscouch.com:5984/wildflowers_of_detroit"
 
 #define fullLatitudeDelta .1
 #define fullLongitudeDelta .1
