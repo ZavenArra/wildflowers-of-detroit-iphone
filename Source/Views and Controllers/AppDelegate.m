@@ -66,7 +66,6 @@
 
     
     
-    [self.window makeKeyAndVisible];
     
 
     RHDataModel * dataModel =[RHDataModel instance];
@@ -81,42 +80,20 @@
 
   //  [self performSelectorInBackground:@selector(initializeInBackground) withObject:nil];
     
-    [self initializeInBackground];
+    [[RHDataModel instance] initWithBlock:^{return;} ];
+    
+    [self.window makeKeyAndVisible];
+    [self performSelector:@selector(presentApplication) withObject:nil afterDelay:3];
+
     
 }
 
 //Start couchBase in the background.  Calls to the datamodel will be asynchronous, allowing the database to
 //start serving whenever it's ready.
-- (void) initializeInBackground{
+- (void) removeBackersView{
+    [loadingViewController.view removeFromSuperview];
+    loadingViewController = nil;
     
-  //  @autoreleasepool {
-        NSLog(@"%@", @"Starting app resources in background");
-        
-        //  @autoreleasepool {
-        //  doing this in the background doesn't make as much sense with touchdb
-        //NSLog(@"%@", @"Starting app resources in background");
-        NSLog(@"%@", @"Starting app resources");    
-    
-        [[RHDataModel instance] initWithBlock: ^ {
-            if(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation] )){
-                [loadingViewController.view removeFromSuperview];
-                loadingViewController = nil;
-            } else {
-                
-                [loadingViewController.loadingView removeFromSuperview];
-                [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-                [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(receivedRotate) name: UIDeviceOrientationDidChangeNotification object: nil];
-            }
-            //If we are on iPhone 4, start replications
-            [[RHDataModel instance] updateSyncURL];
-            
-        } ];
-
-        
-        NSLog(@"%@", @"Done");
-
-   // }
-
 }
 
 - (void) delayedViewDidAppear {
@@ -127,7 +104,6 @@
     isDoneStartingUp = TRUE;    
     [loadingViewController.view removeFromSuperview];
     loadingViewController = nil;
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     [swoopTabViewController didTouchBottomButton:self];
     if(swoopTabViewController.manualAppearCallbacks){
         [self performSelector:@selector(delayedViewDidAppear) withObject:nil afterDelay:0.0];

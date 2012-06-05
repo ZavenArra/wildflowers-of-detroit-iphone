@@ -28,7 +28,7 @@
 
 - (void) initializeAppDelegateAndLaunch;
 - (void) initializeDataModel;
-- (void) initializeInBackground;
+- (void) removeBackersView;
 - (void) doneStartingUp;
 - (void) checkNetworkStatus:(NSNotification *)notice;
 
