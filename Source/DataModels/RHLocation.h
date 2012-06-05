@@ -22,6 +22,8 @@
 + (id) instance;
 + (NSString *) getLatitudeString;
 + (NSString *) getLongitudeString;
++ (double) getLatitude;
++ (double) getLongitude;
 
 
 
