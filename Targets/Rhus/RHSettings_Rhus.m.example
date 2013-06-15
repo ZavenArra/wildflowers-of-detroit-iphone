@@ -7,7 +7,11 @@
 
 #import "RHSettings.h"
 
-#define kSyncDbURL @"http://winterroot:nutsnthings2012@winterroot.iriscouch.com:5984/wildflowers_of_detroit"
+
+#define kRemoteDatabaseName @"t"
+#define kRemoteDatabaseUser @""
+#define kRemoteDatabasePassword @""
+#define kRemoteDatabaseHost @""
 
 #define fullLatitudeDelta .1
 #define fullLongitudeDelta .1
@@ -16,12 +20,20 @@
 
 @implementation RHSettings
 
-+ (NSString *) couchRemoteSyncURL {
-    return kSyncDbURL;
++ (NSString *) databaseName {
+    return kRemoteDatabaseName;
 }
 
-+ (NSString *) databaseName {
-    return @"wildflowers_of_detroit";
++ (NSString *) databaseUser {
+    return kRemoteDatabaseUser;
+}
+
++ (NSString *) databasePassword {
+    return kRemoteDatabasePassword;
+}
+
++ (NSString *) databaseHost {
+    return kRemoteDatabaseHost;
 }
 
 
@@ -36,6 +48,10 @@
 
 + (BOOL) useCamera {
     return true;
+}
+
++ (BOOL) allowNewProjectCreation{
+    return false;
 }
 
 //Map
