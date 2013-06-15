@@ -300,7 +300,7 @@
     } errorBlock:^(NSDictionary *result, NSError *error) {
         NSLog(@"didTouchUploadButton2 error result %@", result);
         NSLog(@"didTouchUploadButton2 error block %@", error);
-        [hud hide:YES];
+        //[hud hide:YES];
         NSString *strCaption = [NSString stringWithFormat:@"Upload Error (%d)", error.code];
         NSString *strMessage = [NSString stringWithFormat:@"%@\n\n%d out of %d uploaded",[error localizedDescription],idx,total];
         [[[UIAlertView alloc] initWithTitle:strCaption
@@ -308,6 +308,31 @@
                                    delegate:nil
                           cancelButtonTitle:@"Dismiss"
                           otherButtonTitles:nil] show];
+        
+        // TODO Copied from above, refactor into separate method
+        if ((index+1)>=total)
+        {
+            [obj setObject:@"YES" forKey:@"uploaded"];
+            BOOL bResult = [RHDataModel updateDocument:obj];
+            NSLog(@"bResult(%d) = %d",index,bResult);
+            [hud hide:YES];
+            [[[UIAlertView alloc] initWithTitle:@"Upload Successful"
+                                        message:[NSString stringWithFormat:@"%d items uploaded.",total]
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+        }
+        else
+        {
+            //TODO: update local DB
+            [obj setObject:@"YES" forKey:@"uploaded"];
+            BOOL bResult = [RHDataModel updateDocument:obj];
+            NSLog(@"bResult(%d) = %d",index,bResult);
+            idx++;
+            [self uploadToRemoteDB:idx totalItem:total progressUI:hud];
+        }
+ 
+        
     }];
 }
 

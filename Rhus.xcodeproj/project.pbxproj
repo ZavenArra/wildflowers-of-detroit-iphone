@@ -811,8 +811,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: JOSE REY M FELIPE (HU85RKX9SG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: JOSE REY M FELIPE (HU85RKX9SG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Matthew Shultz (M7P4B7L87L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Matthew Shultz (M7P4B7L87L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
@@ -822,8 +822,8 @@
 				INFOPLIST_FILE = "Targets/Rhus/$(PRODUCT_NAME)-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = Rhus;
-				PROVISIONING_PROFILE = "C4DC449C-EC4E-40F1-8310-BF35D8067404";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4DC449C-EC4E-40F1-8310-BF35D8067404";
+				PROVISIONING_PROFILE = "8F3BD098-CBC4-49B4-B7DE-F9160C933DFD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8F3BD098-CBC4-49B4-B7DE-F9160C933DFD";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
