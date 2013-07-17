@@ -81,6 +81,8 @@
         NSLog(@"LandScape");
     else
         NSLog(@"not LandScape = %d",[[UIDevice currentDevice] orientation]);
+    
+    [uploadButton setBackgroundImage:[UIImage imageNamed:@"uploadButton"] forState:UIControlStateNormal];
 }
 
 
@@ -107,7 +109,7 @@
         NSLog(@"LandScape");
     else
         NSLog(@"not LandScape = %d",[[UIDevice currentDevice] orientation]);
-    return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskLandscapeRight;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
