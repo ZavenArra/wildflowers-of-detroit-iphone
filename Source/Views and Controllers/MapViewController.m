@@ -14,7 +14,6 @@
 #import "RHMapAnnotation.h"
 #import "RHDocument.h"
 #import "RHSettings.h"
-#import "RHDeviceUser.h"
 #import "AppDelegate.h"
 #import "ProjectsTableViewController.h"
 
@@ -473,7 +472,7 @@
     }
 
     NSString * documentDeviceUserIdentifier = [[activeDocuments objectAtIndex:rhusMapAnnotation.tag] objectForKey:@"deviceuser_identifier"];
-    NSString * deviceUserIdentifier = [RHDeviceUser uniqueIdentifier];
+    NSString * deviceUserIdentifier = @"PLACEHOLDER";
     if([deviceUserIdentifier isEqualToString: documentDeviceUserIdentifier] ){
         annotationView.image = [UIImage imageNamed:@"mapDeviceUserPoint"];
     } else {

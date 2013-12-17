@@ -8,7 +8,6 @@
 
 #import "CameraViewController.h"
 #import "RHDataModel.h"
-#import "RHDeviceUser.h"
 #import "RHLocation.h"
 #import "RHSettings.h"
 #import "UIImage+Resize.h"
@@ -396,7 +395,7 @@
                                          geometry, @"geometry",
                                          //[RESTBody base64WithData: thumbImageDataJpeg ], @"thumb",
                                          //[RESTBody base64WithData: mediumImageDataJpeg ], @"medium",
-                                         [RHDeviceUser uniqueIdentifier], @"deviceuser_identifier",
+                                         @"PLACEHOLDER",
                                          [[RHDataModel instance] project], @"project",
                                          nil];
     

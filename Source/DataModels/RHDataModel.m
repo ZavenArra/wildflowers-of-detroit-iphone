@@ -9,7 +9,6 @@
 #import "RHDataModel.h"
 #import "RHSettings.h"
 #import "RHDocument.h"
-#import "RHDeviceUser.h"
 #import "SharedInstanceMacro.h"
 
 @implementation RHDataModel
@@ -263,11 +262,13 @@
     
 }
 
+/*
 + (NSArray *) getDeviceUserGalleryDocumentsWithStartKey: (NSString *) startKey andLimit: (NSInteger) limit {
     return [self getUserGalleryDocumentsWithStartKey: startKey 
                                             andLimit: limit 
                                     andUserIdentifer:  [RHDeviceUser uniqueIdentifier]];
 }
+ */
 
 
 + (NSArray *) getAllDocumentsNotUploaded {
@@ -528,7 +529,7 @@
     //set a timeout to detect when there are in fact no changes
     //This is only relevant when sync is NOT continuous
    
-    /* NSInvocation * invocation = [[NSInvocation alloc] init];
+    NSInvocation * invocation = [[NSInvocation alloc] init];
     [invocation setTarget:self];
     [invocation setSelector:@selector(syncTimeout)];
     syncStarted = FALSE;
